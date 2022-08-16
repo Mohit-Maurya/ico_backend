@@ -2,34 +2,30 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-export const DeveloperSchema = new Schema({
+export const InvestorSchema = new Schema({
     name: {
         type:String,
-        required:true
+        // required:true
     },
     pan: {
         type:String,
-        required:true
+        // required:true
     },
     aadhaar: {
         type:String,
-        required:true
+        // required:true
     },
     phone_number: {
         type:String,
-        required:true
+        // required:true
     },
     email: {
         type:String,
-        required:true
-    },
-    crypto_wallet_link: {
-        type:String,
-        required:true
+        // required:true
     },
     bank_id:{
         type:mongoose.Schema.Types.ObjectId,
-        required:true,
+        // required:true,
         ref:'BankAccount'
     },
     
@@ -41,5 +37,5 @@ export const DeveloperSchema = new Schema({
     }
 
 }, 
-{ collection : 'developers' }
+{ collection : 'investors' }
 )
