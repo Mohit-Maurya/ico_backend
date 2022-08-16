@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import routes from "./routes/investors.routes.js";
+import logger from "./logger/index.js";
 
 const app = express();
 const port = 8080;
@@ -24,7 +25,10 @@ mongoose.connect(
     }
     // const db = client.db('IcoDatabase');
     // console.log(mongoose.connection.getClient().db("IcoDatabase").find({}));
-    console.log(`MongoDB/mongoose Connected: ${url}`);
+    logger.log({
+      level: "info",
+      message: `MongoDB/mongoose Connected: ${url}`
+    });
   }
 );
 
