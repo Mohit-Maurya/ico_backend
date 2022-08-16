@@ -6,12 +6,10 @@ import mongoose from "mongoose";
 
 const app = express();
 const port = 8080;
-//TODO: Create database
-const database = ""; //<-----
-const appName = "";
+const appName = "ICO";
 mongoose.Promise = global.Promise;
 // Connect URL
-const url = `mongodb://localhost:27017/${database}`;
+const url = `mongodb://localhost:27017/IcoDatabase`;
 
 // Connect to MongoDB
 mongoose.connect(
@@ -32,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cors());
-routes(app);
+// routes(app);
 
 app.get("/", (req, res) => {
   res.send(`${appName} application is running on port: ${port}`);
