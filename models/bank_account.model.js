@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 export const BankAccountSchema = new Schema({
     bank_acc_num: {
-        type: Number,
+        type: String,
         required: true
     },
     ifsc: {

@@ -25,14 +25,15 @@ export const InvestorSchema = new Schema({
     },
     bank_id:{
         type:mongoose.Schema.Types.ObjectId,
-        // required:true,
+        required:true,
         ref:'BankAccount'
     },   
     status: {
         type: String
     },
     password: {
-        type: String
+        type: String,
+        required: true
     }
 
 },
