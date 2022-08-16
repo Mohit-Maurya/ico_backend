@@ -9,7 +9,7 @@ const port = 8080;
 const appName = "ICO";
 mongoose.Promise = global.Promise;
 // Connect URL
-const url = `mongodb+srv://admin:uowAAbc5JFYDRcIu@cluster0.3kujo1u.mongodb.net/?retryWrites=true&w=majority`;
+const url = `mongodb+srv://admin:uowAAbc5JFYDRcIu@cluster0.3kujo1u.mongodb.net/IcoDatabase?retryWrites=true&w=majority`;
 
 // Connect to MongoDB
 mongoose.connect(
