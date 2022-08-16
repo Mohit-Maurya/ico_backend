@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-// import routes from "./routes/test.js";
+import routes from "./routes/investors.routes.js";
 
 const app = express();
 const port = 8080;
@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cors());
-// routes(app);
+routes(app);
 
 app.get("/", (req, res) => {
   res.send(`${appName} application is running on port: ${port}`);

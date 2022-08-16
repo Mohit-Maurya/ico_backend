@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import { InvestorSchema } from "../models/investors.model";
 
 
