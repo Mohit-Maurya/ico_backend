@@ -1,5 +1,5 @@
 import { addNewInvestor,LoginInvestor } from "../controllers/investors.controller";
-import { addNewDeveloper,LoginDeveloper } from "../controllers/developers.controllers";
+import { addNewDeveloper,LoginDeveloper } from "../controllers/developers.controller";
 
 const routes = (app) => {
     app.route("/investors").post(addNewInvestor);

@@ -9,16 +9,21 @@ const BankAccount  = mongoose.model("BankAccount", BankAccountSchema);
 
 
 export const LoginDeveloper = async(req, res) => {
-    Developer.findOne({email : req.body.email}, (err, result) => {
-        console.log(result)
+    Developer.findOne({email : req.body.email}, async (err, result) => {
+        // console.log(result)
         if (err){
             //server error
             res.status(500);
             res.send(err);
         }
         else if(result && result.status != "deleted"){
-            if(bcrypt.compare(req.body.password,result.password)){
+            let verify = await bcrypt.compare(req.body.password,result.password)
+            if(verify){
                return res.send("Authorized User");
+            }
+            else{
+                res.status(404);
+                res.send("Unauthorised User");
             }
         } else {
             res.status(404);
