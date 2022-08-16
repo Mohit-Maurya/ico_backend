@@ -5,37 +5,36 @@ const Schema = mongoose.Schema;
 export const InvestorSchema = new Schema({
     name: {
         type:String,
-        // required:true
+        required:true
     },
     pan: {
         type:String,
-        // required:true
+        required:true
     },
     aadhaar: {
         type:String,
-        // required:true
+        required:true
     },
     phone_number: {
         type:String,
-        // required:true
+        required:true
     },
     email: {
         type:String,
-        // required:true
+        required:true
     },
     bank_id:{
         type:mongoose.Schema.Types.ObjectId,
         // required:true,
         ref:'BankAccount'
-    },
-    
+    },   
     status: {
-        type:String
+        type: String
     },
     password: {
-        type:String
+        type: String
     }
 
-}, 
-{ collection : 'investors' }
+},
+    { collection: 'investors' }
 )
