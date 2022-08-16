@@ -30,14 +30,14 @@ export const DeveloperSchema = new Schema({
     bank_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'BankAccount'
+        ref: 'bankAccount'
     },
-
     status: {
         type: String
     },
     password: {
-        type: String
+        type: String,
+        required: true
     }
 
 },

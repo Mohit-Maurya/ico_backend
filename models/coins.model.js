@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 const Schema = mongoose.Schema;
 
 export const CoinSchema = new Schema({
-    name_of_token: {
+    token_name: {
         type: String,
         required: true
     },
@@ -20,8 +20,18 @@ export const CoinSchema = new Schema({
         required: true
     },
     price_range: {
-        min: Number,
-        max: Number,
+        min: {
+            type: Number,
+            required: true
+        },
+        max: {
+            type: Number,
+            required: true
+        }
+    },
+    platform: {
+        type: String,
+        required: true
     },
     category: {
         type: String,
@@ -41,8 +51,7 @@ export const CoinSchema = new Schema({
         required: true
     },
     status: {
-        type: String,
-        required: true
+        type: String
     },
 },
     { collection: 'coins' }

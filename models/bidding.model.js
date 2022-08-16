@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -10,7 +10,7 @@ export const BiddingSchema = new Schema({
     },
     investor_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Developers',
+        ref: 'Investors',
         required: true
     },
     token_qty: {
@@ -22,13 +22,14 @@ export const BiddingSchema = new Schema({
         required: true
     },
     status: {
-        type: String,
-        required: true
+        type: String
     },
     accpeted_token: {
-        type: Number,
-        required: true
+        type: Number
     },
+    refund_status: {
+        type: String
+    }
 },
     { collection: 'biddings' }
 )
