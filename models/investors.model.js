@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-export const DeveloperSchema = new Schema({
+export const InvestorSchema = new Schema({
     name: {
         type:String,
         required:true
@@ -23,10 +23,6 @@ export const DeveloperSchema = new Schema({
         type:String,
         required:true
     },
-    crypto_wallet_link: {
-        type:String,
-        required:true
-    },
     bank_id:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
@@ -41,5 +37,5 @@ export const DeveloperSchema = new Schema({
     }
 
 }, 
-{ collection : 'developers' }
+{ collection : 'investors' }
 )
