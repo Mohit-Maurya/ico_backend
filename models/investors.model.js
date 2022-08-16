@@ -29,12 +29,12 @@ export const InvestorSchema = new Schema({
         ref:'BankAccount'
     },   
     status: {
-        type:String
+        type: String
     },
     password: {
-        type:String
+        type: String
     }
 
-}, 
-{ collection : 'investors' }
+},
+    { collection: 'investors' }
 )
