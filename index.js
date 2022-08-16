@@ -2,14 +2,14 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-// import routes from "./routes/<routesName>"; <------
+// import routes from "./routes/test.js";
 
 const app = express();
 const port = 8080;
 const appName = "ICO";
 mongoose.Promise = global.Promise;
 // Connect URL
-const url = `mongodb://localhost:27017/IcoDatabase`;
+const url = `mongodb+srv://admin:uowAAbc5JFYDRcIu@cluster0.3kujo1u.mongodb.net/?retryWrites=true&w=majority`;
 
 // Connect to MongoDB
 mongoose.connect(
@@ -22,6 +22,8 @@ mongoose.connect(
     if (err) {
       return console.log(err);
     }
+    // const db = client.db('IcoDatabase');
+    // console.log(mongoose.connection.getClient().db("IcoDatabase").find({}));
     console.log(`MongoDB/mongoose Connected: ${url}`);
   }
 );
