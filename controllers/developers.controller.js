@@ -104,6 +104,7 @@ export const delDeveloper = async (req, res) => {
     })
 }
 
+// edit Developer
 export const editDeveloper = async (req, res) => {
     Developer.updateOne(
         {_id: req.body.id},
