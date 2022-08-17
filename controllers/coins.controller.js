@@ -108,13 +108,23 @@ export const allocate = async (req, res) => {
             {$set: {status: "Accepted", accpeted_tokens: biddings.token_qty}},
 
             (err, result) => {
-                if (err) throw err;
+                if (err) {
+                    logger.log({
+                        level: "error",
+                        message: "Acceptance Error"
+                    })
+                }
                 console.log(result);
             });
         Coin.updateOne({ _id: coinId }, { status: "Closed" }, (err, result) => {
-            if (err) throw err;
-            console.log(result);
-        });
+            if(err) {
+                logger.log({
+                    level: "error",
+                    message: "Acceptance Error"
+                })
+            }
+            //console.log(result);
+    });
         Bidding.updateOne(
             {_id: allocations.superCase.superCaseId}, 
             {$set: {
