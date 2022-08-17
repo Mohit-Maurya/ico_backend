@@ -15,10 +15,10 @@ export const BankAccountSchema = new Schema({
         type: String,
         required: true
     },
-    acc_holder_id: {
-        type: String,
-        required: true
-    }
+    // acc_holder_id: {
+    //     type: String,
+    //     required: true
+    // }
 },
     { collection: 'bankAccount' }
 )

@@ -70,6 +70,25 @@ export const addNewCoin = async (req, res) => {
     });
 };
 
+export const coinById = async (req, res) => {
+    console.log(req.params.id)
+    Coin.findById(req.params.id, (err, result) => {
+        if (err) {
+            logger.log({
+                level: "error",
+                message: "Wrong coin Id"
+            })
+            res.status(404).json({
+                msg: "Wrong coin status",
+            })
+        }
+        else {
+            console.log(result)
+            res.status(200).send(result)
+        }
+    })
+};
+
 export const allocate = async (req, res) => {
     const coinId = req.params.coinId;
     const date = new Date();
