@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-import routes from "./routes/investors.routes.js";
+import routes from "./routes/ico.routes";
 import logger from "./logger/index.js";
 
 const app = express();

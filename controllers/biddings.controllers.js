@@ -4,6 +4,7 @@ import { BiddingSchema } from "../models/bidding.model";
 
 const Bidding = mongoose.model("Bidding", BiddingSchema);
 
+
 export const addNewBidding = (req, res) => {
     const newBidding = new Bidding(req.body);
     newBidding.status = "Active";
