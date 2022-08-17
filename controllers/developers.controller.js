@@ -8,10 +8,10 @@ const Developer = mongoose.model("Developer", DeveloperSchema);
 const BankAccount = mongoose.model("BankAccount", BankAccountSchema);
 
 
-export const LoginDeveloper = async(req, res) => {
-    Developer.findOne({email : req.body.email}, async (err, result) => {
+export const LoginDeveloper = async (req, res) => {
+    Developer.findOne({ email: req.body.email }, async (err, result) => {
         // console.log(result)
-        if (err){
+        if (err) {
             //server error
             res.status(500);
             res.send(err);
@@ -20,7 +20,7 @@ export const LoginDeveloper = async(req, res) => {
             if (bcrypt.compare(req.body.password, result.password)) {
                 return res.send("Authorized User");
             }
-            else{
+            else {
                 res.status(404);
                 res.send("Unauthorised User");
             }
@@ -35,6 +35,28 @@ export const LoginDeveloper = async(req, res) => {
 
 export const addNewDeveloper = async (req, res) => {
     console.log(req.body)
+
+    /// Validations
+    if (!req.body.name || !req.body.pan || !req.body.aadhar || !req.body.phone_number || req.body.email || !req.body.crypto_wallet_link || !req.body.bank_id) {
+        res.status(404).json({
+            msg: "Some field/fields is/are empty"
+        })
+    }
+    var a = Developer.findOne({ email: req.email }, (err, result) => {
+        if (result) {
+            res.status(404).json({
+                msg: "Email already exists"
+            })
+        }
+    })
+
+    if (req.body.password < 6) {
+        res.status(404).json({
+            msg: "Password should be more than 6 letters"
+        })
+    }
+
+    //// Done Validations
     const newBankAccount = new BankAccount(req.body.bank);
     const accountId = await newBankAccount.save();
 
