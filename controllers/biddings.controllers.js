@@ -37,6 +37,23 @@ export const bidsPerStatus = (req, res) => {
     })
 }
 
+export const bidsByInvestor = (req,res) =>{
+    Bidding.find({investor_id:req.params.id},(err, result) => {
+        if (err) {
+            logger.log({
+                level: "error",
+                message: "Wrong bid status"
+            })
+            res.status(404).json({
+                msg: "bid not found status",
+            })
+        }
+        else {
+            res.status(200).send(result)
+        }
+    })
+}
+
 export const getBidbyCoin = (req,res) =>{
     console.log("req params getbidbycoin ",req.params)
     Bidding.findOne({coin_id: req.params.coinId, investor_id: req.params.investorId}, (err, result)=>{
