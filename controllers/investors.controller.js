@@ -19,14 +19,14 @@ export const LoginInvestor = async (req, res) => {
         }
         else if (result && result.status != "deleted") {
             if (await bcrypt.compare(req.body.password, result.password)) {
-                return res.send("Authorized User");
+                return res.send({response:"Authorized User",userid:result._id});
             } else {
                 res.status(404);
-                res.send("Unauthorised User");
+                res.send({response:"Unauthorised User"});
             }
         } else {
             res.status(404);
-            res.send("Unauthorised User");
+            res.send({response:"Unauthorised User"});
         }
     });
 };
