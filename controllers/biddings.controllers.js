@@ -34,3 +34,30 @@ export const bidsPerStatus = (req, res) => {
         }
     })
 }
+
+export const getBidbyCoin = (req,res) =>{
+    Bidding.find({coin_id: req.params.coinId, investor_id: req.params,investorId}, (err, result)=>{
+        if(err){
+            logger.log({
+                level: "error",
+                message: "Some error"
+            })
+            return res.status(500).json({
+                msg: "Some error in request"
+            })
+        }
+        else{
+            if(result.length > 0){
+                res.status(200).json({
+                    msg: "Bid exists",
+                    data: result
+                })
+            }
+            else{
+                return res.status(404).json({
+                    msg: "Bid does not exist"
+                })
+            }
+        }
+    })
+}
