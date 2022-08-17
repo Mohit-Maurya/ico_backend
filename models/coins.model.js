@@ -15,7 +15,7 @@ export const CoinSchema = new Schema({
         type: Date,
         required: true
     },
-    ico_start_date: {
+    ico_end_date: {
         type: Date,
         required: true
     },
