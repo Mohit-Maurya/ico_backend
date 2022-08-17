@@ -78,3 +78,46 @@ export const addNewInvestor = async (req, res) => {
         }
     });
 };
+
+// All info of Investor
+export const getInfo = async (req, res) => {
+    Investor.findOne({ _id: req.body.id }, (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(500).json({
+                msg: "Wrong Investor ID"
+            })
+        }
+        else {
+            res.status(200).send(result)
+        }
+    })
+}
+
+// delete Investor
+export const delInvestor = async (req, res) => {
+    Investor.findOneAndUpdate({ _id: req.body.id }, {
+        status: "Deleted"
+    })
+}
+
+// edit Investor
+export const editInvestor = async (req, res) => {
+    Investor.updateOne(
+        {_id: req.body.id},
+        req.body,
+        (err, result)=>{
+        if(err){
+            logger.log({
+                level: "error",
+                message: "Not found Investor",
+            })
+            return res.status(404).json({
+                message: "Not found Investor",
+            })
+        }
+        return res.status(200).json({
+            message: "Updated Investor",
+        })
+    })
+}
