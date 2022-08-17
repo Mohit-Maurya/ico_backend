@@ -92,7 +92,6 @@ export const allocate = async (req, res) => {
         const biddings = await Bidding.find({ coin_id: coinId }).exec();
         const totalTokensAvailable = coin.total_tokens_available; 
         const allocations = allocationEngine(biddings, totalTokensAvailable);
-<<<<<<< HEAD
         allocations.allocatedBids.forEach(bid => {
             Bidding.updateOne(
                 {_id: bid._id}, 
@@ -108,31 +107,6 @@ export const allocate = async (req, res) => {
         });
         console.log("allocations.superCase.tokens: " + allocations.superCase.tokensToBeGranted);
         Bidding.findOneAndUpdate(
-=======
-        Bidding.updateMany(
-            {_id: {$in: allocations.allocatedBids}},
-            {$set: {status: "Accepted", accpeted_tokens: biddings.token_qty}},
-
-            (err, result) => {
-                if (err) {
-                    logger.log({
-                        level: "error",
-                        message: "Acceptance Error"
-                    })
-                }
-                console.log(result);
-            });
-        Coin.updateOne({ _id: coinId }, { status: "Closed" }, (err, result) => {
-            if(err) {
-                logger.log({
-                    level: "error",
-                    message: "Acceptance Error"
-                })
-            }
-            //console.log(result);
-    });
-        Bidding.updateOne(
->>>>>>> origin/main
             {_id: allocations.superCase.superCaseId}, 
             {$set: {
                 status: "Partially accepted",
