@@ -36,12 +36,12 @@ export const LoginInvestor = async (req, res) => {
 export const addNewInvestor = async (req, res) => {
     console.log(req.body)
     /// Validations
-    if (!req.body.name || !req.body.pan || !req.body.aadhar || !req.body.phone_number || req.body.email || !req.body.bank_id) {
+    if (!req.body.investorDetails.name || !req.body.investorDetails.pan || !req.body.investorDetails.aadhaar || !req.body.investorDetails.phone_number || !req.body.investorDetails.email) {
         return res.status(404).json({
             msg: "Some field/fields is/are empty"
         })
     }
-    var a = Investor.findOne({ email: req.email }, (err, result) => {
+    var a = Investor.findOne({ email: req.body.investorDetails.email }, (err, result) => {
         if (result) {
             return res.status(404).json({
                 msg: "Email already exists"
@@ -49,7 +49,7 @@ export const addNewInvestor = async (req, res) => {
         }
     })
 
-    if (req.body.password < 6) {
+    if (req.body.investorDetails.password < 6) {
         return res.status(404).json({
             msg: "Password should be more than 6 letters"
         })
@@ -57,6 +57,7 @@ export const addNewInvestor = async (req, res) => {
 
     //// Done Validations
     const newBankAccount = new BankAccount(req.body.bank);
+    console.log("new bank ",newBankAccount)
 
     const newInvestor = new Investor(req.body.investorDetails);
     const salt = await bcrypt.genSalt(10)
@@ -65,6 +66,7 @@ export const addNewInvestor = async (req, res) => {
     newInvestor.status = "Approved";
     newInvestor.bank_id = newBankAccount._id
 
+    console.log("newinvestor ",newInvestor)
     newInvestor.save((err, result) => {
         if (err) {
             //server error
