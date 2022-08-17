@@ -21,7 +21,7 @@ const routes = (app) => {
     //bidding api
     app.route("/biddings")
         .post(addNewBidding);
-    app.route("/bids-per-status").get(bidsPerStatus)
+    app.route("/bids-per-status/:investorId/:status").get(bidsPerStatus)
     //allocation engine api
     app.route("/coin/allocation/:coinId")
         .get(allocate);
