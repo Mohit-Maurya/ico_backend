@@ -41,6 +41,9 @@ export const CoinSchema = new Schema({
         type: Number,
         required: true
     },
+    status:{
+        type: String,
+    },
     whitepaper: {
         type: String,
         required: true
