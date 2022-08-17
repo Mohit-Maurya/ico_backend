@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
 import { DeveloperSchema } from "../models/developers.model";
 import { BankAccountSchema } from "../models/bankAccount.model";
+import logger from "../logger";
 
 
 const Developer = mongoose.model("Developer", DeveloperSchema);
@@ -103,24 +104,22 @@ export const delDeveloper = async (req, res) => {
     })
 }
 
-// edit developer --> Needs some work
 export const editDeveloper = async (req, res) => {
-    // Developer.find({ email: req.body.emai }, (err, result) => {
-    //     if (err) {
-    //         console.log(err)
-    //         res.status(500).json({
-    //             msg: err
-    //         })
-    //     }
-    //     else {
-    //         result = req.body
-    //         res.status(200).json({
-    //             msg: "Edited the user"
-    //         })
-    //     }
-    // })
-    
-    Developer.updateOne({_id: req.body.id},{
-        
+    Developer.updateOne(
+        {_id: req.body.id},
+        req.body,
+        (err, result)=>{
+        if(err){
+            logger.log({
+                level: "error",
+                message: "Not found developer",
+            })
+            return res.status(404).json({
+                message: "Not found developer",
+            })
+        }
+        return res.status(200).json({
+            message: "Updated developer",
+        })
     })
 }
