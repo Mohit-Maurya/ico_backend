@@ -8,6 +8,9 @@ export const allocationEngine = (bidding, totalTokensAvailable) => {
     let issuedIndex;
     let overIndex;
     while(numberOfTokens > 0) {
+        if(sortedBids.length === index) {
+            break;
+        }
         numberOfTokens -= sortedBids[index].token_qty;
         index++;
     }
@@ -19,7 +22,7 @@ export const allocationEngine = (bidding, totalTokensAvailable) => {
     } else if(numberOfTokens > 0){
         subscriptionType = "Under";
     }
-    let allocateInvestors = sortedBids.slice(0, issuedIndex).map(a => a.investor_id);
+    let allocatedBids = sortedBids.slice(0, issuedIndex);
 
     let superCase = {
         superCaseInvId: "",
@@ -32,5 +35,5 @@ export const allocationEngine = (bidding, totalTokensAvailable) => {
         superCase.tokensToBeGranted = overBid.token_qty + numberOfTokens; // here numberOfTokens will be negative
     }
 
-    return {allocateInvestors, superCase};
+    return {allocatedBids, superCase};
 };

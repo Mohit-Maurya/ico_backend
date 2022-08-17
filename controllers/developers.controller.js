@@ -37,7 +37,6 @@ export const addNewDeveloper = async (req, res) => {
     console.log(req.body)
 
     const newBankAccount = new BankAccount(req.body.bank);
-    const accountId = await newBankAccount.save();
 
     console.log(accountId)
 
@@ -68,8 +67,6 @@ export const addNewDeveloper = async (req, res) => {
     }
 
     //// Done Validations
-    
-
     newDeveloper.save((err, result) => {
         if (err) {
             //server error
@@ -78,6 +75,7 @@ export const addNewDeveloper = async (req, res) => {
         }
         else if (result) {
             console.log("New Developer added for approval: " + result);
+            newBankAccount.save();
             res.status(200).send(result);
         }
     });

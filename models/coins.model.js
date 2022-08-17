@@ -56,6 +56,9 @@ export const CoinSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Developers',
         required: true
+    },
+    status: {
+        type: String
     }
 },
     { collection: 'coins' }
