@@ -81,10 +81,12 @@ export const allocate = async (req, res) => {
     } else if (date >= coin.ico_end_date) {
         const biddings = await Bidding.find({ coin_id: coinId }).exec();
         const totalTokensAvailable = coin.total_tokens_available
+        console.log(coin);
+        console.log(biddings + "\n" + totalTokensAvailable);
         const allocations = allocationEngine(biddings, totalTokensAvailable);
         Bidding.updateMany(
             {_id: {$in: allocations.allocatedBids}},
-            {$set: {status: "Accepted", accpeted_tokens: `${biddings.token_qty}`}},
+            {$set: {status: "Accepted", accpeted_tokens: biddings.token_qty}},
             (err, result) => {
             if (err) throw err;
             console.log(result);
@@ -94,14 +96,14 @@ export const allocate = async (req, res) => {
             console.log(result);
         });
         Bidding.updateOne(
-            {_id: allocations.superCase.superCaseInvId}, 
+            {_id: allocations.superCase.superCaseId}, 
             {$set: {
                 status: "Partially accepted", 
                 accpeted_tokens: `${allocations.superCase.tokensToBeGranted}`,
                 refundedStatus: "Refunded"
             }}
         );
-        allocations.allocatedBids.push(allocations.superCase.superCaseInvId);
+        allocations.allocatedBids.push(allocations.superCase.superCaseId);
         Bidding.updateMany(
             {_id: {$ne: {$in: allocations.allocatedBids}}},
             {$set: {
@@ -111,7 +113,7 @@ export const allocate = async (req, res) => {
                 }
             }
         );
-        return res.send(allocations);
+        return res.send(allocations.allocatedBids);
     } else {
         return res.send("Bidding in process.");
     }

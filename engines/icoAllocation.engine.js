@@ -2,7 +2,7 @@ export const allocationEngine = (bidding, totalTokensAvailable) => {
     const sortedBids = bidding.sort((a, b) => {
         return b.bidding_price - a.bidding_price;
     });
-    const numberOfTokens = totalTokensAvailable;
+    let numberOfTokens = totalTokensAvailable;
     let index = 0;
     let subscriptionType = "Balanced";
     let issuedIndex;
@@ -25,13 +25,13 @@ export const allocationEngine = (bidding, totalTokensAvailable) => {
     let allocatedBids = sortedBids.slice(0, issuedIndex);
 
     let superCase = {
-        superCaseInvId: "",
+        superCaseId: "",
         tokensToBeGranted: ""
     }
 
     if (subscriptionType == "Over") {
         let overBid = sortedBids[overIndex];
-        superCase.superCaseInvId = overBid.investor_id;
+        superCase.superCaseInvId = overBid._id;
         superCase.tokensToBeGranted = overBid.token_qty + numberOfTokens; // here numberOfTokens will be negative
     }
 
