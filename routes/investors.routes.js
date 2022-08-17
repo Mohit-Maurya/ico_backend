@@ -3,7 +3,6 @@ import { addNewInvestor, LoginInvestor } from "../controllers/investors.controll
 import { addNewDeveloper, LoginDeveloper } from "../controllers/developers.controller";
 import { allCoins, addNewCoin } from "../controllers/coins.controller";
 import { allocate } from "../controllers/coins.controller";
-import { addNewBidding } from "../controllers/biddings.controllers";
 
 const routes = (app) => {
     app.route("/investors").post(addNewInvestor);
