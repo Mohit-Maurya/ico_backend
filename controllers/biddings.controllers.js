@@ -51,7 +51,7 @@ export const getBidbyCoin = (req,res) =>{
         }
         else{
             if(result != null){
-                res.status(200).json({
+                return res.status(200).json({
                     msg: "Bid exists",
                     data: result
                 })
