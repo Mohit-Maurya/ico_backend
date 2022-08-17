@@ -20,6 +20,7 @@ export const addNewBidding = (req, res) => {
 }
 
 export const bidsPerStatus = (req, res) => {
+    console.log("req params ",req.params)
     Bidding.find({ investor_id: req.params.investorId, status: req.params.status }, (err, result) => {
         if (err) {
             logger.log({
@@ -37,7 +38,8 @@ export const bidsPerStatus = (req, res) => {
 }
 
 export const getBidbyCoin = (req,res) =>{
-    Bidding.find({coin_id: req.params.coinId, investor_id: req.params,investorId}, (err, result)=>{
+    console.log("req params getbidbycoin ",req.params)
+    Bidding.findOne({coin_id: req.params.coinId, investor_id: req.params.investorId}, (err, result)=>{
         if(err){
             logger.log({
                 level: "error",
