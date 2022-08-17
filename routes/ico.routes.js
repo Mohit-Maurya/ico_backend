@@ -31,8 +31,11 @@ const routes = (app) => {
         .post(addNewBidding);
     app.route("/get-bid-by-coin/:coinId/:investorId").get(getBidbyCoin)
     app.route("/editBid").post(bidUpdate)
+<<<<<<< HEAD
 
     app.route("/get-bid-by-investor/:id").get(bidsByInvestor)
+=======
+>>>>>>> 9a2bc5d53ec3160845196212b72902a9ac6d9b02
 
     //timer api
 }
