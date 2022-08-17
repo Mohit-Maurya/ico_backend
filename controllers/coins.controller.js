@@ -82,9 +82,35 @@ export const allocate = async (req, res) => {
         const biddings = await Bidding.find({ coin_id: coinId }).exec();
         const totalTokensAvailable = coin.total_tokens_available
         const allocations = allocationEngine(biddings, totalTokensAvailable);
-        Coin.find({ _id: { $in: allocations.allocateInvestors } }, (err, result) => {
+        Bidding.updateMany(
+            {_id: {$in: allocations.allocatedBids}},
+            {$set: {status: "Accepted", accpeted_tokens: `${biddings.token_qty}`}},
+            (err, result) => {
             if (err) throw err;
-        })
+            console.log(result);
+        });
+        Coin.updateOne({_id: coinId}, {status: "Closed"}, (err, result) => {
+            if (err) throw err;
+            console.log(result);
+        });
+        Bidding.updateOne(
+            {_id: allocations.superCase.superCaseInvId}, 
+            {$set: {
+                status: "Partially accepted", 
+                accpeted_tokens: `${allocations.superCase.tokensToBeGranted}`,
+                refundedStatus: "Refunded"
+            }}
+        );
+        allocations.allocatedBids.push(allocations.superCase.superCaseInvId);
+        Bidding.updateMany(
+            {_id: {$ne: {$in: allocations.allocatedBids}}},
+            {$set: {
+                status: "Rejected",
+                accpeted_tokens: 0,
+                refundedStatus: "Refunded"
+                }
+            }
+        );
         return res.send(allocations);
     } else {
         return res.send("Bidding in process.");
