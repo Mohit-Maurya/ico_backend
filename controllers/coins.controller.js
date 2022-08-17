@@ -22,8 +22,31 @@ export const allCoins = (req, res) => {
             "Closed": [],
             "Upcoming": [],
         }
+        var today = new Date();
         for (let key in result) {
-            data[result[key].status] = result[key];
+            // logger.log({
+            //     level: "info",
+            //     message: typeof result[key].ico_start_date
+            // })
+            // logger.log({
+            //     level: "info",
+            //     message: result[key]
+            // })
+            if (typeof result[key].ico_start_date == undefined) {
+                result[key].ico_start_date = new Date(String(result[key].ico_start_date))
+            }
+            if (typeof result[key].ico_end_date == undefined) {
+                result[key].ico_end_date = new Date(String(result[key].ico_start_date))
+            }
+            if (result[key].ico_end_date.getTime() < today.getTime()) {
+                data["Closed"].push(result[key])
+            }
+            else if (result[key].ico_start_date.getTime() > today.getTime()) {
+                data["Upcoming"].push(result[key])
+            }
+            else {
+                data["Active"].push(result[key])
+            }
         }
         res.status(200).send(data);
     });
