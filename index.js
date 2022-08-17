@@ -2,7 +2,11 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
+<<<<<<< HEAD
 import routes from "./routes/ico.routes.js";
+=======
+import routes from "./routes/ico.routes";
+>>>>>>> origin/main
 import logger from "./logger/index.js";
 
 const app = express();

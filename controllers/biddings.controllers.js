@@ -4,6 +4,7 @@ import { BiddingSchema } from "../models/bidding.model";
 
 const Bidding = mongoose.model("Bidding", BiddingSchema);
 
+
 export const addNewBidding = (req, res) => {
     const newBidding = new Bidding(req.body);
     newBidding.status = "Active";
@@ -19,6 +20,7 @@ export const addNewBidding = (req, res) => {
 }
 
 export const bidsPerStatus = (req, res) => {
+    console.log("req params ",req.params)
     Bidding.find({ investor_id: req.params.investorId, status: req.params.status }, (err, result) => {
         if (err) {
             logger.log({
@@ -31,6 +33,53 @@ export const bidsPerStatus = (req, res) => {
         }
         else {
             res.status(200).send(result)
+        }
+    })
+}
+
+export const getBidbyCoin = (req,res) =>{
+    console.log("req params getbidbycoin ",req.params)
+    Bidding.findOne({coin_id: req.params.coinId, investor_id: req.params.investorId}, (err, result)=>{
+        if(err){
+            logger.log({
+                level: "error",
+                message: "Some error"
+            })
+            return res.status(500).json({
+                msg: "Some error in request"
+            })
+        }
+        else{
+            if(result != null){
+                return res.status(200).json({
+                    msg: "Bid exists",
+                    data: result
+                })
+            }
+            else{
+                return res.status(404).json({
+                    msg: "Bid does not exist"
+                })
+            }
+        }
+    })
+}
+
+export const bidUpdate = (req,res) =>{
+    Bidding.updateOne({_id: req.body.id},req.body,(err, result)=>{
+        if (err){
+            logger.log({
+                level: "error",
+                message: "Not found Bid",
+            })
+            return res.status(404).json({
+                message: "Not found Bid",
+            })
+        }
+        else{
+            return res.status(200).json({
+                message: "Updated Bid",
+            })
         }
     })
 }

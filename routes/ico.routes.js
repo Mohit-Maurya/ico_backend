@@ -1,4 +1,4 @@
-import { addNewBidding, bidsPerStatus } from "../controllers/biddings.controllers";
+import { addNewBidding, bidsPerStatus ,getBidbyCoin,bidUpdate} from "../controllers/biddings.controllers";
 import { addNewInvestor, LoginInvestor } from "../controllers/investors.controller";
 import { addNewDeveloper, LoginDeveloper } from "../controllers/developers.controller";
 import { allCoins, addNewCoin,coinById } from "../controllers/coins.controller";
@@ -21,6 +21,7 @@ const routes = (app) => {
     //bidding api
     app.route("/biddings")
         .post(addNewBidding);
+    app.route("/bids-per-status/:investorId/:status").get(bidsPerStatus)
     //allocation engine api
     app.route("/coin/allocation/:coinId")
         .get(allocate);
@@ -28,6 +29,8 @@ const routes = (app) => {
     //bidding api
     app.route("/biddings")
         .post(addNewBidding);
+    app.route("/get-bid-by-coin/:coinId/:investorId").get(getBidbyCoin)
+    app.post("/editBid").post(bidUpdate)
 
     //timer api
 }
