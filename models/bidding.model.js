@@ -8,6 +8,10 @@ export const BiddingSchema = new Schema({
         ref: 'Coins',
         required: true
     },
+    coin_name: {
+        type: String,
+        required: true
+    },
     investor_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Investors',
