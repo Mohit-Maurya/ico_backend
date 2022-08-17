@@ -17,7 +17,15 @@ export const allCoins = (req, res) => {
             })
             return res.send(err);
         }
-        res.status(200).send(result);
+        var data = {
+            "Active": [],
+            "Closed": [],
+            "Upcoming": [],
+        }
+        for (let key in result) {
+            data[result[key].status] = result[key];
+        }
+        res.status(200).send(data);
     });
 };
 
