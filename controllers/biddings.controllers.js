@@ -68,15 +68,15 @@ export const bidUpdate = (req,res) =>{
         if (err){
             logger.log({
                 level: "error",
-                message: "Not found developer",
+                message: "Not found Bid",
             })
             return res.status(404).json({
-                message: "Not found developer",
+                message: "Not found Bid",
             })
         }
         else{
             return res.status(200).json({
-                message: "Updated developer",
+                message: "Updated Bid",
             })
         }
     })
