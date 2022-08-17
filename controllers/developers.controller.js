@@ -36,29 +36,7 @@ export const LoginDeveloper = async (req, res) => {
 export const addNewDeveloper = async (req, res) => {
     console.log(req.body)
 
-    /// Validations
-    if (!req.body.name || !req.body.pan || !req.body.aadhar || !req.body.phone_number || req.body.email || !req.body.crypto_wallet_link || !req.body.bank_id) {
-        res.status(404).json({
-            msg: "Some field/fields is/are empty"
-        })
-    }
-    var a = Developer.findOne({ email: req.email }, (err, result) => {
-        if (result) {
-            res.status(404).json({
-                msg: "Email already exists"
-            })
-        }
-    })
-
-    if (req.body.password < 6) {
-        res.status(404).json({
-            msg: "Password should be more than 6 letters"
-        })
-    }
-
-    //// Done Validations
     const newBankAccount = new BankAccount(req.body.bank);
-    const accountId = await newBankAccount.save();
 
     console.log(accountId)
 
@@ -68,7 +46,27 @@ export const addNewDeveloper = async (req, res) => {
     newDeveloper.password = hashedPassword
     newDeveloper.status = "Approved";
     newDeveloper.bank_id = accountId._id
+    /// Validations
+    if (!req.body.name || !req.body.pan || !req.body.aadhaar || !req.body.phone_number || req.body.email || !req.body.crypto_wallet_link || !req.body.bank_id) {
+        return res.status(404).json({
+            msg: "Some field/fields is/are empty"
+        })
+    }
+    var a = Developer.findOne({ email: req.email }, (err, result) => {
+        if (result) {
+            return res.status(404).json({
+                msg: "Email already exists"
+            })
+        }
+    })
 
+    if (req.body.password < 6) {
+        return res.status(404).json({
+            msg: "Password should be more than 6 letters"
+        })
+    }
+
+    //// Done Validations
     newDeveloper.save((err, result) => {
         if (err) {
             //server error
@@ -77,6 +75,7 @@ export const addNewDeveloper = async (req, res) => {
         }
         else if (result) {
             console.log("New Developer added for approval: " + result);
+            newBankAccount.save();
             res.status(200).send(result);
         }
     });

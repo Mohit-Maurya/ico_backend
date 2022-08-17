@@ -14,10 +14,6 @@ export const BankAccountSchema = new Schema({
     acc_holder_name: {
         type: String,
         required: true
-    },
-    acc_holder_id: {
-        type: String,
-        required: true
     }
 },
     { collection: 'bankAccount' }
