@@ -105,18 +105,22 @@ export const delDeveloper = async (req, res) => {
 
 // edit developer --> Needs some work
 export const editDeveloper = async (req, res) => {
-    Developer.find({ _id: req.body.id }, (err, result) => {
-        if (err) {
-            console.log(err)
-            res.status(500).json({
-                msg: err
-            })
-        }
-        else {
-            result = req.body
-            res.status(200).json({
-                msg: "Edited the user"
-            })
-        }
+    // Developer.find({ email: req.body.emai }, (err, result) => {
+    //     if (err) {
+    //         console.log(err)
+    //         res.status(500).json({
+    //             msg: err
+    //         })
+    //     }
+    //     else {
+    //         result = req.body
+    //         res.status(200).json({
+    //             msg: "Edited the user"
+    //         })
+    //     }
+    // })
+    
+    Developer.updateOne({_id: req.body.id},{
+        
     })
 }
