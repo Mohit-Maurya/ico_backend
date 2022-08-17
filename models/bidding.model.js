@@ -24,7 +24,7 @@ export const BiddingSchema = new Schema({
     status: {
         type: String
     },
-    accpeted_tokens: {
+    accepted_tokens: {
         type: Number
     },
     refund_status: {

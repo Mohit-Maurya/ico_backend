@@ -24,14 +24,6 @@ export const allCoins = (req, res) => {
         }
         var today = new Date();
         for (let key in result) {
-            // logger.log({
-            //     level: "info",
-            //     message: typeof result[key].ico_start_date
-            // })
-            // logger.log({
-            //     level: "info",
-            //     message: result[key]
-            // })
             if (typeof result[key].ico_start_date == undefined) {
                 result[key].ico_start_date = new Date(String(result[key].ico_start_date))
             }
@@ -53,7 +45,6 @@ export const allCoins = (req, res) => {
 };
 
 export const addNewCoin = async (req, res) => {
-    // console.log(req.body)
     const newCoin = new Coin(req.body);
 
     console.log(await new Date("2022-08-18"))
@@ -99,39 +90,47 @@ export const allocate = async (req, res) => {
         return res.send("Alloaction can't happen before ICO start date.");
     } else if (date >= coin.ico_end_date) {
         const biddings = await Bidding.find({ coin_id: coinId }).exec();
-        const totalTokensAvailable = coin.total_tokens_available
-        console.log(coin);
-        console.log(biddings + "\n" + totalTokensAvailable);
+        const totalTokensAvailable = coin.total_tokens_available; 
         const allocations = allocationEngine(biddings, totalTokensAvailable);
-        Bidding.updateMany(
-            {_id: {$in: allocations.allocatedBids}},
-            {$set: {status: "Accepted", accpeted_tokens: biddings.token_qty}},
-
-            (err, result) => {
-                if (err) throw err;
-                console.log(result);
-            });
-        Coin.updateOne({ _id: coinId }, { status: "Closed" }, (err, result) => {
-            if (err) throw err;
-            console.log(result);
+        allocations.allocatedBids.forEach(bid => {
+            Bidding.updateOne(
+                {_id: bid._id}, 
+                {$set: {status: "Accepted", accepted_tokens: bid.token_qty}},
+                (err, result) => {
+                    if (err) throw err;
+                    console.log("Accepted bida accepted: " + result);
+                });
         });
-        Bidding.updateOne(
+        Coin.findOneAndUpdate({ _id: coinId }, { status: "Closed" }, (err, result) => {
+            if (err) throw err;
+            console.log("updatedCoin" + result);
+        });
+        console.log("allocations.superCase.tokens: " + allocations.superCase.tokensToBeGranted);
+        Bidding.findOneAndUpdate(
             {_id: allocations.superCase.superCaseId}, 
             {$set: {
-                status: "Partially accepted", 
-                accpeted_tokens: allocations.superCase.tokensToBeGranted,
-                refundedStatus: "Refunded"
-            }}
+                status: "Partially accepted",
+                accepted_tokens: allocations.superCase.tokensToBeGranted,
+                refund_status: "Refunded"
+            }},
+            (err, result) => {
+                if(err) throw err;
+                console.log(result);
+            }
         );
+        console.log(allocations.superCase.superCaseId);
         allocations.allocatedBids.push(allocations.superCase.superCaseId);
         Bidding.updateMany(
-            { _id: { $ne: { $in: allocations.allocatedBids } } },
+            { _id: { $nin: allocations.allocatedBids } },
             {
                 $set: {
                     status: "Rejected",
-                    accpeted_tokens: 0,
-                    refundedStatus: "Refunded"
+                    accepted_tokens: 0,
+                    refund_status: "Refunded"
                 }
+            },
+            (err, result) => {
+                console.log(result);
             }
         );
         return res.send(allocations.allocatedBids);
