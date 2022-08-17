@@ -61,3 +61,22 @@ export const getBidbyCoin = (req,res) =>{
         }
     })
 }
+
+export const bidUpdate = (req,res) =>{
+    Bidding.updateOne({_id: req.body.id},req.body,(err, result)=>{
+        if (err){
+            logger.log({
+                level: "error",
+                message: "Not found developer",
+            })
+            return res.status(404).json({
+                message: "Not found developer",
+            })
+        }
+        else{
+            return res.status(200).json({
+                message: "Updated developer",
+            })
+        }
+    })
+}
