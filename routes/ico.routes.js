@@ -29,6 +29,7 @@ const routes = (app) => {
     //bidding api
     app.route("/biddings")
         .post(addNewBidding);
+    app.route("/get-bid-by-coin").get(getBidbyCoin)
 
     //timer api
 }
