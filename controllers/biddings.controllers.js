@@ -66,7 +66,15 @@ export const getBidbyCoin = (req,res) =>{
 }
 
 export const bidUpdate = (req,res) =>{
+    logger.log({
+        level: "warn",
+        message: "in update"
+    })
     Bidding.updateOne({_id: req.body.id},req.body,(err, result)=>{
+        logger.log({
+            level: "warn",
+            message: "Problem: " + JSON.stringify(req.body)
+        })
         if (err){
             logger.log({
                 level: "error",
