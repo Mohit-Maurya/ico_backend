@@ -19,6 +19,10 @@ export const CoinSchema = new Schema({
         type: Date,
         required: true
     },
+    total_tokens_available: {
+        type: Number,
+        required: true
+    },
     price_range: {
         min: {
             type: Number,
@@ -40,6 +44,9 @@ export const CoinSchema = new Schema({
     min_token_qty: {
         type: Number,
         required: true
+    },
+    status:{
+        type: String,
     },
     whitepaper: {
         type: String,
