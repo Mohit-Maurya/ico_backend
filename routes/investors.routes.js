@@ -14,7 +14,7 @@ const routes = (app) => {
     app.route("/coins")
         .get(allCoins)
         .post(addNewCoin);
-    app.route("/date-of-coins").get(dateOfCoins);
+    //app.route("/date-of-coins").get(dateOfCoins);
     //bidding api
     app.route("/biddings")
         .post(addNewBidding);
