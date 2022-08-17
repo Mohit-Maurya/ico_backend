@@ -58,16 +58,12 @@ export const addNewDeveloper = async (req, res) => {
 
     //// Done Validations
     const newBankAccount = new BankAccount(req.body.bank);
-    const accountId = await newBankAccount.save();
-
-    console.log(accountId)
-
     const newDeveloper = new Developer(req.body.developerDetails);
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(newDeveloper.password, salt)
     newDeveloper.password = hashedPassword
     newDeveloper.status = "Approved";
-    newDeveloper.bank_id = accountId._id
+    newDeveloper.bank_id = newBankAccount._id
 
     newDeveloper.save((err, result) => {
         if (err) {
@@ -77,6 +73,7 @@ export const addNewDeveloper = async (req, res) => {
         }
         else if (result) {
             console.log("New Developer added for approval: " + result);
+            newBankAccount.save();
             res.status(200).send(result);
         }
     });
