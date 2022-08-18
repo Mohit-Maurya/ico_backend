@@ -63,9 +63,9 @@ export const addNewCoin = async (req, res) => {
     });
 };
 
-export const coinById = async (req, res) => {
+export const getCoinWithDevId = async (req, res) => {
     console.log(req.params.id)
-    Coin.findById(req.params.id, (err, result) => {
+    Coin.find({dev_id:req.params.id}, (err, result) => {
         if (err) {
             logger.log({
                 level: "error",
@@ -76,14 +76,38 @@ export const coinById = async (req, res) => {
             })
         }
         else {
+            var data = {
+                "Active": [],
+                "Closed": [],
+                "Upcoming": [],
+            }
+            var today = new Date();
             console.log(result)
-            res.status(200).send(result)
+            for (let key in result) {
+                if (typeof result[key].ico_start_date == undefined) {
+                    result[key].ico_start_date = new Date(String(result[key].ico_start_date))
+                }
+                if (typeof result[key].ico_end_date == undefined) {
+                    result[key].ico_end_date = new Date(String(result[key].ico_start_date))
+                }
+                if (result[key].ico_end_date.getTime() < today.getTime()) {
+                    data["Closed"].push(result[key])
+                }
+                else if (result[key].ico_start_date.getTime() > today.getTime()) {
+                    data["Upcoming"].push(result[key])
+                }
+                else {
+                    data["Active"].push(result[key])
+                }
+            }
+            res.status(200).send(data);
         }
     })
 };
 
-export const getCoinWithDevId = (req, res) => {
-    Coin.find({dev_id: req.params.developerId}, (err, result) => {
+export const getCoinById = (req, res) => {
+    console.log(req.params.id)
+    Coin.findById(req.params.id, (err, result) => {
         if(err) {
             return res.status(500).send(err);
         } else {
@@ -111,14 +135,24 @@ export const allocate = async (req, res) => {
                     {_id: new ObjectId(bid._id)}, 
                     {$set: {status: "Accepted", accepted_tokens: bid.token_qty}},
                     (err, result) => {
-                        if (err) throw err;
+                        if (err){
+                            logger.log({
+                                level: "error",
+                                message: "Some error : " + err
+                            })
+                        }
                         console.log(result);
                     });
             });
         }
        
         Coin.findOneAndUpdate({ _id: new ObjectId(coinId) }, { status: "Closed" }, (err, result) => {
-            if (err) throw err;
+            if (err){
+                logger.log({
+                    level: "error",
+                    message: "Some error : " + err
+                })
+            }
             console.log("updatedCoin" + result);
         });
         Bidding.findOneAndUpdate(
@@ -129,7 +163,12 @@ export const allocate = async (req, res) => {
                 refund_status: "Refunded"
             }},
             (err, result) => {
-                if(err) throw err;
+                if(err){
+                    logger.log({
+                        level: "error",
+                        message: "Some error : " + err
+                    })
+                }
                 console.log(result);
             }
         );
