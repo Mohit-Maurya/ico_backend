@@ -42,8 +42,6 @@ const routes = (app) => {
     app.route("/editBid").post(bidUpdate)
     app.route("get-bids-by-investor/:investorId").get(bidsByInvestor)
 
-    app.route("/get-bid-by-investor/:id").get(bidsByInvestor)
-
     //timer api
 }
 
