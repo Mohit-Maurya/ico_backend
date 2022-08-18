@@ -1,7 +1,7 @@
 import { addNewBidding, bidsPerStatus ,getBidbyCoin,bidUpdate,bidsByInvestor} from "../controllers/biddings.controllers";
-import { addNewInvestor, delInvestor, editInvestor, getInfo, LoginInvestor } from "../controllers/investors.controller";
-import { addNewDeveloper, LoginDeveloper, getDeveloperInfo, editDeveloper, delDeveloper } from "../controllers/developers.controller";
-import { allCoins, addNewCoin,coinById } from "../controllers/coins.controller";
+import { addNewInvestor, LoginInvestor } from "../controllers/investors.controller";
+import { addNewDeveloper, LoginDeveloper } from "../controllers/developers.controller";
+import { allCoins, addNewCoin,coinById, getCoinWithDevId } from "../controllers/coins.controller";
 import { allocate } from "../controllers/coins.controller";
 
 const routes = (app) => {
@@ -15,6 +15,7 @@ const routes = (app) => {
     // developers api
     app.route("/developers/login").post(LoginDeveloper)
     app.route("/developers").post(addNewDeveloper);
+
     app.route("/get-developer-by-id/:developerId").get(getDeveloperInfo)
     app.route("/edit-Developer").post(editDeveloper)
     app.route("/delete-Developer").post(delDeveloper)
@@ -24,23 +25,23 @@ const routes = (app) => {
         .get(allCoins)
         .post(addNewCoin);
 
-    app.route("/coin/:id")
-        .get(coinById);   
+    app.route("/coin/:id").get(coinById);  
+    app.route("/coins/:developerId").get(getCoinWithDevId);
     //app.route("/date-of-coins").get(dateOfCoins);
     //bidding api
-    app.route("/biddings")
-        .post(addNewBidding);
-    app.route("/bids-per-status/:investorId/:status").get(bidsPerStatus)
+    app.route("/biddings").post(addNewBidding);
+    app.route("/bids-per-status/:investorId/:status").get(bidsPerStatus);
     //allocation engine api
-    app.route("/coin/allocation/:coinId")
-        .get(allocate);
+    app.route("/coin/allocation/:coinId").get(allocate);
 
     //bidding api
-    app.route("/biddings")
-        .post(addNewBidding);
-    app.route("/get-bid-by-coin/:coinId/:investorId").get(getBidbyCoin)
-    app.route("/editBid").post(bidUpdate)
-    app.route("/get-bids-by-investor/:id").get(bidsByInvestor)
+    app.route("/biddings").post(addNewBidding);
+    app.route("/get-bid-by-coin/:coinId/:investorId").get(getBidbyCoin);
+    app.route("/editBid").post(bidUpdate);
+    
+
+    app.route("/get-bid-by-investor/:id").get(bidsByInvestor);
+
 
     //timer api
 }

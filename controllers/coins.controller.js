@@ -82,6 +82,16 @@ export const coinById = async (req, res) => {
     })
 };
 
+export const getCoinWithDevId = (req, res) => {
+    Coin.find({dev_id: req.params.developerId}, (err, result) => {
+        if(err) {
+            return res.status(500).send(err);
+        } else {
+            return res.send(result);
+        }
+    })
+}
+
 export const allocate = async (req, res) => {
     const coinId = req.params.coinId;
     const date = new Date();
