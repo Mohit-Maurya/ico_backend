@@ -1,7 +1,7 @@
 import { addNewBidding, bidsPerStatus ,getBidbyCoin,bidUpdate,bidsByInvestor} from "../controllers/biddings.controllers";
 import { addNewInvestor, LoginInvestor } from "../controllers/investors.controller";
 import { addNewDeveloper, LoginDeveloper } from "../controllers/developers.controller";
-import { allCoins, addNewCoin,coinById, getCoinWithDevId } from "../controllers/coins.controller";
+import { allCoins, addNewCoin,coinById } from "../controllers/coins.controller";
 import { allocate } from "../controllers/coins.controller";
 
 const routes = (app) => {
@@ -26,7 +26,6 @@ const routes = (app) => {
         .post(addNewCoin);
 
     app.route("/coin/:id").get(coinById);  
-    app.route("/coins/:developerId").get(getCoinWithDevId);
     //app.route("/date-of-coins").get(dateOfCoins);
     //bidding api
     app.route("/biddings").post(addNewBidding);
