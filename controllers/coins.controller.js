@@ -105,6 +105,16 @@ export const coinById = async (req, res) => {
     })
 };
 
+export const getCoinWithDevId = (req, res) => {
+    Coin.find({dev_id: req.params.developerId}, (err, result) => {
+        if(err) {
+            return res.status(500).send(err);
+        } else {
+            return res.send(result);
+        }
+    })
+}
+
 export const allocate = async (req, res) => {
     const coinId = req.params.coinId;
     const date = new Date();
@@ -124,14 +134,24 @@ export const allocate = async (req, res) => {
                     {_id: new ObjectId(bid._id)}, 
                     {$set: {status: "Accepted", accepted_tokens: bid.token_qty}},
                     (err, result) => {
-                        if (err) throw err;
+                        if (err){
+                            logger.log({
+                                level: "error",
+                                message: "Some error : " + err
+                            })
+                        }
                         console.log(result);
                     });
             });
         }
        
         Coin.findOneAndUpdate({ _id: new ObjectId(coinId) }, { status: "Closed" }, (err, result) => {
-            if (err) throw err;
+            if (err){
+                logger.log({
+                    level: "error",
+                    message: "Some error : " + err
+                })
+            }
             console.log("updatedCoin" + result);
         });
         Bidding.findOneAndUpdate(
@@ -142,7 +162,12 @@ export const allocate = async (req, res) => {
                 refund_status: "Refunded"
             }},
             (err, result) => {
-                if(err) throw err;
+                if(err){
+                    logger.log({
+                        level: "error",
+                        message: "Some error : " + err
+                    })
+                }
                 console.log(result);
             }
         );
