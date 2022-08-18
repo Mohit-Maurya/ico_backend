@@ -84,7 +84,7 @@ export const addNewDeveloper = async (req, res) => {
 
 // All info of developer
 export const getDeveloperInfo = async (req, res) => {
-    Developer.findOne({ _id: req.body.id }, (err, result) => {
+    Developer.findOne({ _id: req.params.developerId }, (err, result) => {
         if (err) {
             console.log(err)
             res.status(500).json({

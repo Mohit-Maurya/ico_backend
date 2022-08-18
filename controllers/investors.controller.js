@@ -83,7 +83,7 @@ export const addNewInvestor = async (req, res) => {
 
 // All info of Investor
 export const getInfo = async (req, res) => {
-    Investor.findOne({ _id: req.body.id }, (err, result) => {
+    Investor.findOne({ _id: req.params.investorId }, (err, result) => {
         if (err) {
             console.log(err)
             res.status(500).json({

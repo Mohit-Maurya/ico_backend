@@ -8,14 +8,14 @@ const routes = (app) => {
     // investors api
     app.route("/investors").post(addNewInvestor);
     app.route("/investors/login").post(LoginInvestor);
-    app.route("/get-investor-by-id").get(getInfo)
+    app.route("/get-investor-by-id/:investorId").get(getInfo)
     app.route("/edit-investor").post(editInvestor)
     app.route("/delete-investor").post(delInvestor)
 
     // developers api
     app.route("/developers/login").post(LoginDeveloper)
     app.route("/developers").post(addNewDeveloper);
-    app.route("/get-developer-by-id").post(getDeveloperInfo)
+    app.route("/get-developer-by-id/:developerId").get(getDeveloperInfo)
     app.route("/edit-Developer").post(editDeveloper)
     app.route("/delete-Developer").post(delDeveloper)
 
