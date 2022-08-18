@@ -1,12 +1,18 @@
 import { addNewBidding, bidsPerStatus ,getBidbyCoin,bidUpdate,bidsByInvestor} from "../controllers/biddings.controllers";
-import { addNewInvestor, LoginInvestor } from "../controllers/investors.controller";
+import { addNewInvestor, delInvestor, editInvestor, getInfo, LoginInvestor } from "../controllers/investors.controller";
 import { addNewDeveloper, LoginDeveloper } from "../controllers/developers.controller";
 import { allCoins, addNewCoin,coinById } from "../controllers/coins.controller";
 import { allocate } from "../controllers/coins.controller";
 
 const routes = (app) => {
+    // investors api
     app.route("/investors").post(addNewInvestor);
     app.route("/investors/login").post(LoginInvestor);
+    app.route("/get-investor-by-id").get(getInfo)
+    app.route("/edit-investor").post(editInvestor)
+    app.route("/delete-investor").post(delInvestor)
+
+    // developers api
     app.route("/developers/login").post(LoginDeveloper)
     app.route("/developers").post(addNewDeveloper);
 
