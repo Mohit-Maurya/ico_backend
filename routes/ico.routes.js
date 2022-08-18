@@ -1,6 +1,6 @@
 import { addNewBidding, bidsPerStatus ,getBidbyCoin,bidUpdate,bidsByInvestor} from "../controllers/biddings.controllers";
 import { addNewInvestor, LoginInvestor, getInfo, editInvestor, delInvestor } from "../controllers/investors.controller";
-import { addNewDeveloper, LoginDeveloper } from "../controllers/developers.controller";
+import { addNewDeveloper, LoginDeveloper, getDeveloperInfo, editDeveloper, delDeveloper } from "../controllers/developers.controller";
 import { allCoins, addNewCoin,coinById } from "../controllers/coins.controller";
 import { allocate } from "../controllers/coins.controller";
 
