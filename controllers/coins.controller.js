@@ -65,7 +65,7 @@ export const addNewCoin = async (req, res) => {
 
 export const coinById = async (req, res) => {
     console.log(req.params.id)
-    Coin.findById(req.params.id, (err, result) => {
+    Coin.find(req.params.id, (err, result) => {
         if (err) {
             logger.log({
                 level: "error",
