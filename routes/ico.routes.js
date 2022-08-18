@@ -1,4 +1,4 @@
-import { addNewBidding, bidsPerStatus ,getBidbyCoin,bidUpdate} from "../controllers/biddings.controllers";
+import { addNewBidding, bidsPerStatus ,getBidbyCoin,bidUpdate,bidsByInvestor} from "../controllers/biddings.controllers";
 import { addNewInvestor, LoginInvestor } from "../controllers/investors.controller";
 import { addNewDeveloper, LoginDeveloper } from "../controllers/developers.controller";
 import { allCoins, addNewCoin,coinById } from "../controllers/coins.controller";
@@ -31,6 +31,8 @@ const routes = (app) => {
         .post(addNewBidding);
     app.route("/get-bid-by-coin/:coinId/:investorId").get(getBidbyCoin)
     app.route("/editBid").post(bidUpdate)
+
+    app.route("/get-bid-by-investor/:id").get(bidsByInvestor)
 
     //timer api
 }
