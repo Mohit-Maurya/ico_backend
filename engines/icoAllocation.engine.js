@@ -23,6 +23,7 @@ export const allocationEngine = (bidding, totalTokensAvailable) => {
         subscriptionType = "Under";
     }
     issuedIndex++;
+    console.log("Issues Index: " + issuedIndex);
     let allocatedBids = sortedBids.slice(0, issuedIndex);
 
     let superCase = {
