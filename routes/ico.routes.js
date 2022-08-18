@@ -40,6 +40,7 @@ const routes = (app) => {
         .post(addNewBidding);
     app.route("/get-bid-by-coin/:coinId/:investorId").get(getBidbyCoin)
     app.route("/editBid").post(bidUpdate)
+    app.route("get-bids-by-investor/:investorId").get(bidsByInvestor)
 
     app.route("/get-bid-by-investor/:id").get(bidsByInvestor)
 
