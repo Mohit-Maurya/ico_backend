@@ -83,7 +83,7 @@ export const addNewDeveloper = async (req, res) => {
 };
 
 // All info of developer
-export const getInfo = async (req, res) => {
+export const getDeveloperInfo = async (req, res) => {
     Developer.findOne({ _id: req.body.id }, (err, result) => {
         if (err) {
             console.log(err)
