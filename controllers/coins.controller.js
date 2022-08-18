@@ -63,7 +63,7 @@ export const addNewCoin = async (req, res) => {
     });
 };
 
-export const coinById = async (req, res) => {
+export const getCoinWithDevId = async (req, res) => {
     console.log(req.params.id)
     Coin.find({dev_id:req.params.id}, (err, result) => {
         if (err) {
@@ -105,8 +105,9 @@ export const coinById = async (req, res) => {
     })
 };
 
-export const getCoinWithDevId = (req, res) => {
-    Coin.find({dev_id: req.params.developerId}, (err, result) => {
+export const getCoinById = (req, res) => {
+    console.log(req.params.id)
+    Coin.findById(req.params.id, (err, result) => {
         if(err) {
             return res.status(500).send(err);
         } else {
