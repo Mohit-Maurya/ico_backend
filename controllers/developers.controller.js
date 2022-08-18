@@ -48,12 +48,12 @@ export const addNewDeveloper = async (req, res) => {
     newDeveloper.status = "Approved";
     newDeveloper.bank_id = accountId._id
     /// Validations
-    if (!req.body.name || !req.body.pan || !req.body.aadhaar || !req.body.phone_number || req.body.email || !req.body.crypto_wallet_link || !req.body.bank_id) {
+    if (!req.body.developerDetails.name || !req.body.developerDetails.pan || !req.body.developerDetails.aadhaar ) {
         return res.status(404).json({
             msg: "Some field/fields is/are empty"
         })
     }
-    var a = Developer.findOne({ email: req.email }, (err, result) => {
+    var a = Developer.findOne({ email: req.body.developerDetails.email }, (err, result) => {
         if (result) {
             return res.status(404).json({
                 msg: "Email already exists"
@@ -61,7 +61,7 @@ export const addNewDeveloper = async (req, res) => {
         }
     })
 
-    if (req.body.password < 6) {
+    if (req.body.developerDetails.password < 6) {
         return res.status(404).json({
             msg: "Password should be more than 6 letters"
         })
