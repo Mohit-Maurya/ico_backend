@@ -39,14 +39,14 @@ export const addNewDeveloper = async (req, res) => {
 
     const newBankAccount = new BankAccount(req.body.bank);
 
-    console.log(accountId)
+    // console.log(accountId)
 
     const newDeveloper = new Developer(req.body.developerDetails);
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(newDeveloper.password, salt)
     newDeveloper.password = hashedPassword
     newDeveloper.status = "Approved";
-    newDeveloper.bank_id = accountId._id
+    newDeveloper.bank_id = newBankAccount._id
     /// Validations
     if (!req.body.developerDetails.name || !req.body.developerDetails.pan || !req.body.developerDetails.aadhaar ) {
         return res.status(404).json({
