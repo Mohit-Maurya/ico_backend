@@ -7,7 +7,10 @@
 - could've used express Router to better organise routes
 - logging is added, more log statements could've been added: everytime an error occurs, or query database
 - response objects could've been standardized
+  - for e.g. all success responses can follow a specific format
+  - and all error responses can follow another specific format
 - filenames should have underscores instead of dots in their names: e.g. coins_models.js
+- unused code should be removed
 
 ### File Specific comments
 - coins.models.js: 'status' declared twice (would be caught at compile-time in typescript)
